@@ -6,9 +6,10 @@ MAINTAINER Armen Kaleshian <armen@kriation.com>
 RUN yum -y install php-fpm php-mysqlnd && yum -y clean all
 
 # Add php user/group and create home to share content between containers
-RUN useradd -r -d /opt/php -U php && \
+RUN useradd -r -d /opt/php -U php -s /sbin/nologin && \
     mkdir -p /opt/php && \
-    chown php:php /opt/php
+    chown php:php /opt/php && \
+    userdel apache
 
 # Change permissions on config files/directories
 RUN chown -R php:php \ 
